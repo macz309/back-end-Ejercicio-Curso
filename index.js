@@ -1,10 +1,16 @@
 import express from "express";
 import pkg from "./package.json";
-import mongoose from "mongoose";
+import mongoose, { models } from "mongoose";
 import router from "./api/routes/index";
+import path from "path";
+import fs from "fs";
 import{ db_host, db_name, port} from "./api/config/config";
 
 const app = express();
+const models_path = path.join(__dirname, "./api/models");
+fs.readdirSync(models_path).forEach((file)=>{
+    require(models_path+"/"+file)
+})
 
 //CORS
 app.use((req, res ,next)=>{
