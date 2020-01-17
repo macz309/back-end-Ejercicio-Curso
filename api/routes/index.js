@@ -3,6 +3,8 @@ import { getHome } from "../controllers/app";
 import { createUser, getUsers, updateUser } from "../controllers/users";
 import { createPublishment,getPublishments,getAllPublishmentsByUser} from "../controllers/publishment"
 import { createComment } from "../controllers/comments";
+import { authToken , refreshToken } from "../middlewares/auth-token";
+import { login } from "../controllers/login.js";
 const router = Router();
 
 //Ruta default
@@ -10,7 +12,7 @@ router.get("/", getHome);
 
 //Rutas de usuario
 router.post("/createUser", createUser);
-router.get("/getUsers", getUsers);
+router.get("/getUsers",authToken, getUsers);
 router.put("/updateUser/:userId", updateUser);
 
 //Rutas de publicacion
@@ -20,5 +22,8 @@ router.get("/getAllPublishmentsByUser/:userId",getAllPublishmentsByUser);
 
 //CRUD comment
 router.post("/createComment",createComment)
+
+//LOGIN
+router.post("/login",login);
 
 export default router;
